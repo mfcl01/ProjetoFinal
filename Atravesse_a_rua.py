@@ -6,7 +6,7 @@ clock = pygame.time.Clock()
 # ----- Gera tela principal
 pygame.display.set_caption('atravesse a rua!')
 window = pygame.display.set_mode((1000, 595))
-image = pygame.image.load('assets\Captura de tela 2024-10-30 184033.png')
+image = pygame.image.load('Captura de tela 2024-10-30 184033.png')
 window.blit(image, (0, 0))
 pygame.mixer.music.load('musica lobby.mp3')
 pygame.mixer.music.play(-1)
