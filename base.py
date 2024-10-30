@@ -39,18 +39,9 @@ while game:
                 is_red = not is_red
             if is_red: color = (255, 0, 0)
             else: color = (102, 0, 0)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                fein = True
-                while fein == True:
-                    font = pygame.font.Font('freesansbold.ttf', 50)
-                    text = font.render('FEIN', True, (255,0,0) , (0,128,255))
-                    textRect = text.get_rect()
-                    textRect.center = (250, 250)
-                    window.fill((255,255,255))
-                    window.blit(text, textRect)
+            
 
-        #if event.type == pygame.KEYUP:
-        #    game = False
+        
 
     # ----- Gera saídas
     #window.fill((0, 0, 0))  # Preenche com a cor azul
