@@ -20,6 +20,8 @@ running = True
 while running:
 
     while lobby:
+        image = pygame.image.load('Captura de tela 2024-10-30 184033.png')
+        window.blit(image, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -27,22 +29,23 @@ while running:
             if event.type == pygame.KEYDOWN:
                     play = True
                     lobby = False
+                    window.fill(colour)
+                    pygame.display.update() 
                     break
-    window.fill(colour)
-    pygame.display.update() 
     while play:
+        font = pygame.font.SysFont(None, 48)
+        text = font.render('HELLO', True, (255, 255, 255))
+        text_2 = font.render('WORLD', True, (255, 255, 255))
+        keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 play = False
                 running = False
-            if event.type == pygame.KEYDOWN:
+            if keys[pygame.K_ESCAPE]:
+                lobby = True
                 play = False
-                running = False
-            
-            
-    
-                    
-            # ----- Atualiza estado do jogo
+                        
+        # ----- Atualiza estado do jogo
         pygame.display.update()  # Mostra o novo frame para o jogador
         pygame.display.flip()
 # ===== Finalização =====
