@@ -1,7 +1,8 @@
 import random
 import pygame
+from pygame.sprite import _Group
 from config import LARGURA, ALTURA, LARGURA_DO_CARRO, ALTURA_DO_CARRO, LARGURA_RAPOSA, ALTURA_RAPOSA
-from assets import RAPOSA_IMG, WALKING_SOUND, CARRO_IMG, EXPLOSAO_ANIM
+from assets import  BACKGROUND, RAPOSA_IMG, WALKING_SOUND, CARRO_IMG, EXPLOSAO_ANIM, load_assets
 
 
 class Raposa(pygame.sprite.Sprite):
@@ -58,5 +59,16 @@ class Carro(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, LARGURA-LARGURA_DO_CARRO)
         self.rect.y = random.randint(-100, -ALTURA_DO_CARRO)
+        self.speedx = random.randint(-3, 3)
+        self.speedy = random.randint(2, 9)
+class Background(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets[BACKGROUND]
+        self.rect = self.image.get_rect()
+        self.rect.x = 
+        self.rect.y = 
         self.speedx = random.randint(-3, 3)
         self.speedy = random.randint(2, 9)

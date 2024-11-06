@@ -6,21 +6,21 @@ clock = pygame.time.Clock()
 # ----- Gera tela principal
 pygame.display.set_caption('Atravesse a Rua!')
 window = pygame.display.set_mode((1000, 595))
-image = pygame.image.load("assets folder/imagens/Captura de tela 2024-10-30 184033.png")
-image = pygame.image.load('Captura de tela 2024-10-30 184033.png')
+image = pygame.image.load('assets folder\imagens\Captura de tela 2024-10-30 184033.png')
 window.blit(image, (0, 0))
-pygame.mixer.music.load('musica lobby.mp3')
+pygame.mixer.music.load('assets\sons\musica lobby.mp3')
 pygame.mixer.music.play(-1)
 pygame.display.update() 
 # ----- Inicia estruturas de dados
 colour = (255, 0, 0)
 lobby = True
 running = True
+tela='lobby'
+
 # ===== Loop principal =====
 while running:
 
-    while lobby:
-        image = pygame.image.load('Captura de tela 2024-10-30 184033.png')
+    if tela == 'lobby':
         window.blit(image, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -29,10 +29,9 @@ while running:
             if event.type == pygame.KEYDOWN:
                     play = True
                     lobby = False
-                    window.fill(colour)
                     pygame.display.update() 
-                    break
-    while play:
+                    tela = 'play'
+    if tela == 'play':
         font = pygame.font.SysFont(None, 48)
         text = font.render('HELLO', True, (255, 255, 255))
         text_2 = font.render('WORLD', True, (255, 255, 255))
