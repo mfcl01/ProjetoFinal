@@ -1,6 +1,8 @@
 import pygame
 from pygame import mixer
 import assets
+import config
+
 pygame.init()
 mixer.init()
 clock = pygame.time.Clock()
@@ -27,13 +29,16 @@ tela ='lobby'
 
 carro_img = pygame.image.load('Carro azul.png').convert_alpha()
 carro = pygame.transform.scale(carro_img, (assets.LARGURA_DO_CARRO, assets.ALTURA_DO_CARRO))
-
-carro_x = -10
-carro_y = 500
+caminhao_img =pygame.image.load('caminhão_branco-removebg-preview.png').convert_alpha()
+caminhao = pygame.transform.scale(caminhao_img, (config.LARGURA_CAMINHAO, config.ALTURA_CAMINHAO))
+carro_x = -150
+carro_y = 400
 carro_speed = 2.5
+caminhao_x = 1400
+caminhao_y = 80
 x, y = 0, 0
-y2 = 1000
-velocidade = 5   # Quantos pixels o personagem se move por frame
+y2 = altura
+velocidade = 2   # Quantos pixels o personagem se move por frame
 
 # ===== Loop principal =====
 while running:
@@ -53,7 +58,9 @@ while running:
         window.blit(rua, (x, y))
         window.blit(rua2, (x, y2))
         keys = pygame.key.get_pressed()
+
         carro_x += carro_speed
+        caminhao_x -= carro_speed
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -61,27 +68,38 @@ while running:
             y += velocidade
             y2 += velocidade
             carro_y += velocidade
+            caminhao_y += velocidade
         if keys[pygame.K_DOWN]:
             y -= velocidade
             y2 -= velocidade 
             carro_y -= velocidade
+            caminhao_y -= velocidade
+
         if y < 0:
             y = 0
-            y2 = 1000
-            carro_y = 500
+            y2 = altura
+            carro_y = 400
+            caminhao_y = 80
+
         if y >= altura:
             y = -altura
-            carro_y = 500
+            carro_y = 400
+            carro_x = -150
+            caminhao_y = 80 
+            caminhao_x = 1400
         if y2 >= altura:
             y2 = -altura
         if carro_x + assets.LARGURA_DO_CARRO < 0 or carro_x > largura:
-            carro_x = -10
+            carro_x = -150
+        if caminhao_x + assets.LARGURA_CAMINHAO < 0:
+            caminhao_x = 1400
 
         # ----- Atualiza estado do jogo
         window.fill((0, 0, 0))  # Limpa a tela para não deixar rastros
         window.blit(rua, (x, y))  # Desenha o mapa na nova posição
         window.blit(rua2, (x, y2))
         window.blit(carro, (carro_x, carro_y))
+        window.blit(caminhao, (caminhao_x, caminhao_y))
         pygame.display.update()  # Mostra o novo frame para o jogador
         pygame.display.flip()
 # ===== Finalização =====
