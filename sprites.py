@@ -1,74 +1,87 @@
 import random
 import pygame
-from pygame.sprite import _Group
+from pygame.sprite import Group
 from config import LARGURA, ALTURA, LARGURA_DO_CARRO, ALTURA_DO_CARRO, LARGURA_RAPOSA, ALTURA_RAPOSA
 from assets import  BACKGROUND, RAPOSA_IMG, WALKING_SOUND, CARRO_IMG, EXPLOSAO_ANIM, load_assets
 
 
 class Raposa(pygame.sprite.Sprite):
-    def __init__(self, groups, assets):
+    def __init__(self, img):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[RAPOSA_IMG]
+        self.image = img
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = LARGURA / 2
-        self.rect.bottom = ALTURA - 10
+        self.rect.centerx = 1536 / 2
+        self.rect.bottom = 680
         self.speedx = 0
-        self.groups = groups
-        self.assets = assets
-    # Só será possível andar uma vez a cada 500 milissegundos
-        self.last_step = pygame.time.get_ticks()
-        self.walk_cooldown = 500
+        
     
     def update(self):
-    # Atualização da posição da nave
+    # Atualização da posição da raposa
         self.rect.x += self.speedx
+        self.rect.x -= self.speedx
 
         # Mantem dentro da tela
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.up > 0:
-            self.rect.up = 0
-        if self.rect.up > ALTURA:
-            self.rect.up = ALTURA
-    def walk(self):
-        # Verifica se pode andar
-        now = pygame.time.get_ticks()
-        # Verifica quantos ticks se passaram desde o último passo.
-        elapsed_ticks = now - self.last_step
 
-        # Se já pode andar novamente...
-        if elapsed_ticks > self.walk_cooldown:
-            # Marca o tick da nova imagem.
-            self.last_step = now
-            # A nova bala vai ser criada logo acima e no centro horizontal da nave
+    def reset_x(self):
+        self.rect.x = 0
 
-            self.assets[WALKING_SOUND].play()
-
+    def reset_y(self):
+        self.rect.y = self.starty
 class Carro(pygame.sprite.Sprite):
-    def __init__(self, assets):
+    def __init__(self, img, x, y, speedx):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[CARRO_IMG]
+        self.image = img
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, LARGURA-LARGURA_DO_CARRO)
-        self.rect.y = random.randint(-100, -ALTURA_DO_CARRO)
-        self.speedx = random.randint(-3, 3)
-        self.speedy = random.randint(2, 9)
+        self.rect.x = x
+        self.startx = x
+        self.rect.y = y
+        self.starty = y
+        self.speedx = speedx
+    
+    def update(self):
+        self.rect.x += self.speedx
+        if self.speedx < 0:
+            if self.rect.x + self.rect.width < 0:
+                self.rect.x = self.startx
+        else:
+            if self.rect.x > pygame.display.Info().current_w:
+                self.rect.x = self.startx
+    
+    def reset_x(self):
+        self.rect.x = self.startx
+
+    def reset_y(self):
+        self.rect.y = self.starty
+
+    def aumenta_velocidade(self):
+        self.speedx *= 1.02
+
 class Background(pygame.sprite.Sprite):
-    def __init__(self, assets):
+    def __init__(self, img, x, y):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[BACKGROUND]
+        self.image = img
         self.rect = self.image.get_rect()
-        self.rect.x = 
-        self.rect.y = 
-        self.speedx = random.randint(-3, 3)
-        self.speedy = random.randint(2, 9)
+        self.rect.x = x
+        self.rect.y = y
+        self.starty = y
+
+    def update(self):
+        pass
+
+    def reset_x(self):
+        self.rect.x = 0
+
+    def reset_y(self):
+        self.rect.y = self.starty

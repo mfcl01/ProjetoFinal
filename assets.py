@@ -1,6 +1,6 @@
 import pygame
 import os
-from config import LARGURA_DO_CARRO, ALTURA_DO_CARRO, LARGURA_RAPOSA, ALTURA_RAPOSA, IMG, SND
+from config import LARGURA_DO_CARRO, ALTURA_DO_CARRO, LARGURA_RAPOSA, ALTURA_RAPOSA, IMG, SND, LARGURA_CAMINHAO, ALTURA_CAMINHAO
 
 BACKGROUND = 'background'
 CARRO_IMG = 'carro_img'
@@ -11,7 +11,7 @@ EXPLOSAO_ANIM = 'explosao_anim'
 SCORE_FONT = 'score_font'
 DEATH_SOUND = 'death_sonud'
 WALKING_SOUND = 'walking_sound'
-
+CAMINHAO_IMG = 'caminhao_img'
 def load_assets():
     assets = {}
     assets[BACKGROUND] = pygame.image.load(os.path.join(IMG, 'starfield.png')).convert()
