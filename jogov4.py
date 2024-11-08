@@ -72,26 +72,39 @@ rect_x_quit = (largura - rect_largura) // 2
 rect_y_quit = ((altura - rect_altura) // 2) + 350
 rect_quit = pygame.Rect(rect_x_quit, rect_y_quit, rect_largura, rect_altura)
 
-fonte_texto = pygame.font.SysFont(None, 48)  # Default font with size 48
-texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255))  # White text
-texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255))  # White text
+fonte_texto = pygame.font.SysFont(None, 48)
+texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255))  
+texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255)) 
 text_rect_play = texto_button_play.get_rect(center=rect_play.center)
 text_rect_quit = texto_button_play.get_rect(center=rect_quit.center)
 
-image_lobby = pygame.image.load('Captura de tela 2024-10-30 184033.png')
+
+font_pixel = pygame.font.Font("assets folder/pixelatedczs.ttf",52)
+font_pixel_2 = pygame.font.Font("assets folder/pixelatedczs.ttf",52)
+titulo_jogo = font_pixel.render("ATRAVESSE A RUA",True,(247, 105, 2))
+titulo_jogo_2 = font_pixel_2.render("ATRAVESSE A RUA",True,(200, 0, 0))
+window.blit(titulo_jogo,(rect_x_quit-125,rect_y_quit-500))
+window.blit(titulo_jogo_2,(rect_x_quit-125,rect_y_quit-500))
+
+pygame.display.flip()
+pygame.display.update()
+image_lobby = pygame.image.load('BACKGROUND J4.png')
 image_lobby = pygame.transform.scale(image_lobby, (largura, altura))
 
 window.blit(image_lobby, (0, 0))
 pygame.draw.rect(window, (247, 105, 2), rect_play)
 pygame.draw.rect(window, (247, 105, 2), rect_quit)
-window.blit(texto_button_play, text_rect_play)
-window.blit(texto_button_play, text_rect_play)
 
 # ===== Loop principal =====
 while running:
 
     if tela == 'lobby':
-
+        window.blit(titulo_jogo_2,(rect_x_quit-123,rect_y_quit-500))
+        window.blit(titulo_jogo,(rect_x_quit-120,rect_y_quit-500))
+        window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
+        pygame.display.flip()
+        pygame.display.update()
+        pontos = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -123,8 +136,9 @@ while running:
 
 
     if tela == 'play':
+        texto_score = fonte_texto.render("Score: "+str(pontos), True, (255,255,255))
+        window.blit(texto_score,[15,15])
         font = pygame.font.SysFont(None, 48)
-        
         keys = pygame.key.get_pressed()
 
         for sprite in all_sprites:
@@ -160,11 +174,13 @@ while running:
             for sprite in all_sprites:
                 sprite.reset_y()
 
+
         if y >= altura:
             y = -altura
             for sprite in all_sprites:
                 sprite.reset_y()
                 sprite.reset_x()
+            pontos += 1
             # for veiculo in veiculos_sprites:
             #     veiculo.aumenta_velocidade()
             # rua_sprite.image = fazenda
@@ -179,6 +195,9 @@ while running:
         window.fill((0, 0, 0))  # Limpa a tela para não deixar rastros
         all_sprites.draw(window)
         players.draw(window)
+        texto_score = fonte_texto.render("Score: "+str(pontos), True, (255,255,255))
+        window.blit(texto_score,[15,15])
+    
     pygame.display.flip()
     pygame.display.update()  # Mostra o novo frame para o jogador
 
