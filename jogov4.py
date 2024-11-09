@@ -62,17 +62,26 @@ velocidade = 2   # Quantos pixels o personagem se move por frame
 # mexer no + 200 para ver altura do retangulo
 
 # Botao Play
+
 rect_largura, rect_altura = 200, 100
+# //Atras do botão
+rect_largura_fundo, rect_altura_fundo = 220, 120 
+rect_largura_fundo_titulo, rect_altura_fundo_titulo = 500, 65 
 rect_x_play = (largura - rect_largura) // 2
 rect_y_play = ((altura - rect_altura) // 2) + 200
-rect_play = pygame.Rect(rect_x_play, rect_y_play, rect_largura, rect_altura)
-
 # Botao Quit
 rect_x_quit = (largura - rect_largura) // 2
 rect_y_quit = ((altura - rect_altura) // 2) + 350
 rect_quit = pygame.Rect(rect_x_quit, rect_y_quit, rect_largura, rect_altura)
 
-fonte_texto = pygame.font.SysFont(None, 48)
+rect_play = pygame.Rect(rect_x_play, rect_y_play, rect_largura, rect_altura)
+rect_play_fundo = pygame.Rect(rect_x_play-10, rect_y_play-10, rect_largura_fundo, rect_altura_fundo)
+rect_play_fundo_2 = pygame.Rect(rect_x_play-10, rect_y_play+140, rect_largura_fundo, rect_altura_fundo)
+rect_fundo_titulo = pygame.Rect(rect_x_quit-133,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
+
+
+
+fonte_texto = pygame.font.Font("assets folder/pixelatedczs.ttf", 48)
 texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255))  
 texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255)) 
 text_rect_play = texto_button_play.get_rect(center=rect_play.center)
@@ -80,27 +89,28 @@ text_rect_quit = texto_button_play.get_rect(center=rect_quit.center)
 
 
 font_pixel = pygame.font.Font("assets folder/pixelatedczs.ttf",52)
-font_pixel_2 = pygame.font.Font("assets folder/pixelatedczs.ttf",52)
 titulo_jogo = font_pixel.render("ATRAVESSE A RUA",True,(247, 105, 2))
-titulo_jogo_2 = font_pixel_2.render("ATRAVESSE A RUA",True,(200, 0, 0))
-window.blit(titulo_jogo,(rect_x_quit-125,rect_y_quit-500))
-window.blit(titulo_jogo_2,(rect_x_quit-125,rect_y_quit-500))
+titulo_jogo_2 = font_pixel.render("ATRAVESSE A RUA",True,(200, 0, 0))
+# window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
+# window.blit(titulo_jogo_2,(rect_x_quit-121,rect_y_quit-500))
 
-pygame.display.flip()
-pygame.display.update()
+# pygame.display.flip()
+# pygame.display.update()
 image_lobby = pygame.image.load('BACKGROUND J4.png')
 image_lobby = pygame.transform.scale(image_lobby, (largura, altura))
 
 window.blit(image_lobby, (0, 0))
+pygame.draw.rect(window, (255, 255, 255), rect_fundo_titulo)
 pygame.draw.rect(window, (247, 105, 2), rect_play)
+pygame.draw.rect(window, (255, 255, 255), rect_play_fundo)
+pygame.draw.rect(window, (255, 255, 255), rect_play_fundo_2)
 pygame.draw.rect(window, (247, 105, 2), rect_quit)
 
 # ===== Loop principal =====
 while running:
 
     if tela == 'lobby':
-        window.blit(titulo_jogo_2,(rect_x_quit-123,rect_y_quit-500))
-        window.blit(titulo_jogo,(rect_x_quit-120,rect_y_quit-500))
+        window.blit(titulo_jogo_2,(rect_x_quit-121,rect_y_quit-500))
         window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
         pygame.display.flip()
         pygame.display.update()
@@ -109,6 +119,7 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
             if rect_play.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(window,(209, 204, 201), rect_play_fundo)
                 pygame.draw.rect(window, (200, 0, 0), rect_play)
                 texto_button_play = fonte_texto.render('PLAY', True, (209, 204, 201)) 
                 window.blit(texto_button_play, text_rect_play)
@@ -116,12 +127,14 @@ while running:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     tela = "play"
             if not rect_play.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(window, (255, 255, 255), rect_play_fundo)
                 pygame.draw.rect(window, (247, 105, 2), rect_play)
                 texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255)) 
                 window.blit(texto_button_play, text_rect_play)
 
                 # ABAIXO é o quit
             if rect_quit.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(window,(209, 204, 201), rect_play_fundo_2)
                 pygame.draw.rect(window, (200, 0, 0), rect_quit)
                 texto_button_quit = fonte_texto.render('QUIT', True, (209, 204, 201)) 
                 window.blit(texto_button_quit, text_rect_quit)
@@ -129,6 +142,7 @@ while running:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     running = False
             if not rect_quit.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(window,(255, 255, 255), rect_play_fundo_2)
                 pygame.draw.rect(window, (247, 105, 2), rect_quit)
                 texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255)) 
                 window.blit(texto_button_quit, text_rect_quit)
@@ -136,7 +150,7 @@ while running:
 
 
     if tela == 'play':
-        texto_score = fonte_texto.render("Score: "+str(pontos), True, (255,255,255))
+        texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
         window.blit(texto_score,[15,15])
         font = pygame.font.SysFont(None, 48)
         keys = pygame.key.get_pressed()
@@ -195,7 +209,7 @@ while running:
         window.fill((0, 0, 0))  # Limpa a tela para não deixar rastros
         all_sprites.draw(window)
         players.draw(window)
-        texto_score = fonte_texto.render("Score: "+str(pontos), True, (255,255,255))
+        texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
         window.blit(texto_score,[15,15])
     
     pygame.display.flip()
