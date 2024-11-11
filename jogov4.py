@@ -109,10 +109,15 @@ while running:
             for sprite in all_sprites:
                 sprite.reset_y()
                 sprite.reset_x()
-            # for veiculo in veiculos_sprites:
-            #     veiculo.aumenta_velocidade()
+            for veiculo in veiculos_sprites:
+                veiculo.aumenta_velocidade()
+            for player in players:
+                player.aumenta_velocidade()
+          
             # rua_sprite.image = fazenda
             # rua2_sprite.image = fazenda
+
+
 
 
         if rua2_sprite.rect.y >= altura:
