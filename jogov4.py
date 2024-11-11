@@ -79,15 +79,15 @@ rect_play = pygame.Rect(rect_x_play, rect_y_play, rect_largura, rect_altura)
 rect_play_fundo = pygame.Rect(rect_x_play-10, rect_y_play-10, rect_largura_fundo, rect_altura_fundo)
 
 # FUNDO DOS PERSONAGENS
-rect_personagem_fundo = pygame.Rect(450, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_2 = pygame.Rect(550, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_3 = pygame.Rect(650, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_4 = pygame.Rect(750, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_5 = pygame.Rect(850, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo = pygame.Rect(300, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_2 = pygame.Rect(500, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_3 = pygame.Rect(700, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_4 = pygame.Rect(900, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_5 = pygame.Rect(1100, 450, rect_largura_fundo-120, rect_altura_fundo-10)
 
 rect_play_fundo_2 = pygame.Rect(rect_x_play-10, rect_y_play+140, rect_largura_fundo, rect_altura_fundo)
 rect_fundo_titulo = pygame.Rect(rect_x_quit-133,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
-rect_fundo_personagem = pygame.Rect(rect_x_quit-150,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
+# rect_fundo_personagem = pygame.Rect(rect_x_quit-150,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
 
 
 
@@ -170,8 +170,6 @@ frame = 0
 contador_passo = 0
 
 
-
-
 for animacao in animacao_passos:
     img_temp_lista = []
     for _ in range(animacao):
@@ -202,6 +200,8 @@ while running:
     mouse_pos = pygame.mouse.get_pos()
     hover_play = rect_play.collidepoint(mouse_pos)
     hover_quit = rect_quit.collidepoint(mouse_pos)
+
+
     if tela == 'lobby':
         window.blit(titulo_jogo_2,(rect_x_quit-121,rect_y_quit-500))
         window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
@@ -373,20 +373,20 @@ while running:
 
         window.blit(titulo_personagens,(rect_x_quit-250,rect_y_quit-500))
         pygame.draw.rect(window,(92, 91, 87), rect_personagem_fundo)
-        window.blit(imagem_scale_raccoon,(452.5,455))
+        window.blit(imagem_scale_raccoon,(302.5,455))
 
         
         pygame.draw.rect(window,(35, 179, 232), rect_personagem_fundo_2)
-        window.blit(imagem_scale_bird,(552.5,455))
+        window.blit(imagem_scale_bird,(502.5,455))
 
         pygame.draw.rect(window,(191, 128, 44), rect_personagem_fundo_3)
-        window.blit(imagem_scale_raposa,(652.5,455))
+        window.blit(imagem_scale_raposa,(702.5,455))
         
         pygame.draw.rect(window,(247, 141, 0), rect_personagem_fundo_4)
-        window.blit(imagem_scale_catorange,(752.5,455))
+        window.blit(imagem_scale_catorange,(902.5,455))
 
         pygame.draw.rect(window,(130, 128, 126), rect_personagem_fundo_5)
-        window.blit(imagem_scale_catgray,(852.5,455))
+        window.blit(imagem_scale_catgray,(1102.5,455))
 
 
     if tela == 'play':
@@ -493,8 +493,10 @@ while running:
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
             window.blit(texto_score,[15,15])
         
+
     pygame.display.flip()
     pygame.display.update()  # Mostra o novo frame para o jogador
+
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
