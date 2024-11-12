@@ -41,10 +41,17 @@ lobby = True
 running = True
 tela ='lobby'
 
+# raposa_img = pygame.image.load('raposa.webp')
 raposa_img = pygame.image.load('raposa.webp')
 raposa = pygame.transform.scale(raposa_img,(assets.LARGURA_RAPOSA, assets.ALTURA_RAPOSA))
+
+
+
+
 carro_img = pygame.image.load('Carro azul.png').convert_alpha()
 carro = pygame.transform.scale(carro_img, (assets.LARGURA_DO_CARRO, assets.ALTURA_DO_CARRO))
+rect_carro = carro_img.get_rect()
+
 caminhao_img =pygame.image.load('caminhão_branco-removebg-preview.png').convert_alpha()
 caminhao = pygame.transform.scale(caminhao_img, (config.LARGURA_CAMINHAO, config.ALTURA_CAMINHAO))
 caminhao_sprite = Carro(caminhao, 1400, 80, -2.5)
@@ -53,8 +60,10 @@ veiculos_sprites.add(caminhao_sprite)
 carro_sprite = Carro(carro, -150, 400, 2.5)
 all_sprites.add(carro_sprite)
 veiculos_sprites.add(carro_sprite)
+
 raposa_sprite = Raposa(raposa)
 players.add(raposa_sprite)
+
 # carro_x = -150
 # carro_y = 400
 # carro_speed = 2.5
@@ -93,10 +102,17 @@ rect_fundo_titulo = pygame.Rect(rect_x_quit-133,rect_y_quit-495, rect_largura_fu
 
 
 fonte_texto = pygame.font.Font("assets folder/pixelatedczs.ttf", 48)
-texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255))  
+fonte_texto_menor = pygame.font.Font("assets folder/pixelatedczs.ttf", 40)
+fonte_texto_maior = pygame.font.Font("assets folder/pixelatedczs.ttf", 100)
+texto_button_play = fonte_texto.render('PLAY', True, (255, 255, 255))
+texto_button_restart = fonte_texto_menor.render('RESTART', True, (255, 255, 255))  
 texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255)) 
 text_rect_play = texto_button_play.get_rect(center=rect_play.center)
+
+text_rect_restart = texto_button_restart.get_rect(center=(rect_play.centerx + 5 , rect_play.centery))
+
 text_rect_quit = texto_button_play.get_rect(center=rect_quit.center)
+
 
 
 font_pixel = pygame.font.Font("assets folder/pixelatedczs.ttf",52)
@@ -128,6 +144,7 @@ cat_orange = "CATORANGESPRITESHEET.png"
 imagem_catorange_escolher = pygame.image.load("frame_17_catorange.png")
 imagem_scale_catorange = pygame.transform.scale(imagem_catorange_escolher,(92,92))
 
+
 # USAR A SEGUINTE VARIAVEL PARA ESCOLHER PERSONAGEM
 personagem = raccoon
 current_character = str(personagem)
@@ -137,6 +154,9 @@ sprite_character_image_rc = pygame.image.load(personagem).convert_alpha()
 
 sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
 sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image_rc)
+
+personagem_atual = {fox:"frame_17_fox.png",raccoon:"frame_17_raccoon.png",bird:"frame_17_bird.png",cat_gray:"frame_17_catgray.png",cat_orange:"frame_17_catorange.png"}
+morreu_img = pygame.image.load(personagem_atual[personagem]).convert_alpha()
 
 def pegar_imagem(sheet, frame, width, height, scale):
     image = pygame.Surface((width,height), pygame.SRCALPHA).convert_alpha()
@@ -170,6 +190,8 @@ frame = 0
 contador_passo = 0
 
 
+
+
 for animacao in animacao_passos:
     img_temp_lista = []
     for _ in range(animacao):
@@ -181,9 +203,18 @@ for animacao in animacao_passos:
 # raposa retangulo
 orientacao_atual = "down"
 acao = idle_frontal
-sprite_rect = lista_animacao[acao][0].get_rect()
-sprite_rect_x = 1536 / 2
+# sprite_rect = lista_animacao[acao][0].get_rect()
+sprite_rect_x = 1536 / 2 - 100
 sprite_rect_y = 680
+
+tombstone_img_og = pygame.image.load("Tombstone.png").convert_alpha()
+tombstone_img = pygame.transform.scale(tombstone_img_og,(250,250))
+rect_tombstone = tombstone_img.get_rect()
+centro_tela = window.get_rect().center
+centro_mudado = (centro_tela[0] - 5, centro_tela[1])
+rect_tombstone.center = centro_mudado
+
+
 
 image_lobby = pygame.image.load('BACKGROUND J4.png')
 image_lobby = pygame.transform.scale(image_lobby, (largura, altura))
@@ -194,6 +225,14 @@ pygame.draw.rect(window, (255, 255, 255), rect_play_fundo)
 pygame.draw.rect(window, (255, 255, 255), rect_play_fundo_2)
 pygame.draw.rect(window, (247, 105, 2), rect_quit)
 
+ultimos_pontos = 0
+
+
+img_frame_atual = lista_animacao[acao][frame]
+frame_atual_mask = pygame.mask.from_surface(img_frame_atual)
+sprite_rect = img_frame_atual.get_rect(topleft=(sprite_rect_x,sprite_rect_y))
+
+# =========================================================================================================
 # ===== Loop principal =====
 while running:
     tempo_agora = pygame.time.get_ticks()
@@ -201,11 +240,10 @@ while running:
     hover_play = rect_play.collidepoint(mouse_pos)
     hover_quit = rect_quit.collidepoint(mouse_pos)
 
-
+    
     if tela == 'lobby':
         window.blit(titulo_jogo_2,(rect_x_quit-121,rect_y_quit-500))
         window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
-
         pontos = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -255,6 +293,8 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = raccoon
                     running = False
+                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
                     lista_animacao = []
@@ -263,6 +303,9 @@ while running:
                     animacao_tempo_espera = 100
                     frame = 0
                     contador_passo = 0
+                    morreu_img_og = pygame.image.load(personagem_atual[personagem]).convert_alpha()
+                
+
                     for animacao in animacao_passos:
                         img_temp_lista = []
                         for _ in range(animacao):
@@ -275,6 +318,8 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = bird
                     running = False
+                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
                     lista_animacao = []
@@ -283,6 +328,7 @@ while running:
                     animacao_tempo_espera = 100
                     frame = 0
                     contador_passo = 0
+                    morreu_img_og = pygame.image.load(personagem_atual[personagem]).convert_alpha()
                     for animacao in animacao_passos:
                         img_temp_lista = []
                         for _ in range(animacao):
@@ -295,6 +341,8 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = fox
                     running = False
+                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
                     lista_animacao = []
@@ -303,6 +351,8 @@ while running:
                     animacao_tempo_espera = 100
                     frame = 0
                     contador_passo = 0
+                    morreu_img_og = pygame.image.load(personagem_atual[personagem]).convert_alpha()
+
                     for animacao in animacao_passos:
                         img_temp_lista = []
                         for _ in range(animacao):
@@ -316,6 +366,8 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = cat_orange
                     running = False
+                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
                     lista_animacao = []
@@ -324,6 +376,8 @@ while running:
                     animacao_tempo_espera = 100
                     frame = 0
                     contador_passo = 0
+                    morreu_img_og = pygame.image.load(personagem_atual[personagem]).convert_alpha()
+
                     for animacao in animacao_passos:
                         img_temp_lista = []
                         for _ in range(animacao):
@@ -336,6 +390,8 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = cat_gray
                     running = False
+                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
                     lista_animacao = []
@@ -344,6 +400,8 @@ while running:
                     animacao_tempo_espera = 100
                     frame = 0
                     contador_passo = 0
+                    morreu_img_og = pygame.image.load(personagem_atual[personagem]).convert_alpha()
+
                     for animacao in animacao_passos:
                         img_temp_lista = []
                         for _ in range(animacao):
@@ -413,7 +471,8 @@ while running:
             # MOVIMENTAÇÃO DA SPRITE COM ANIMAÇÃO
             if keys[pygame.K_UP]:
                 orientacao_atual = "up"
-                sprite_rect_y -= velocidade
+                sprite_rect_y -= velocidade + 10
+                sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_cima
 
                 for sprite in all_sprites:
@@ -423,8 +482,11 @@ while running:
 
             elif keys[pygame.K_DOWN]:
                 orientacao_atual = "down"
-                sprite_rect_y += velocidade
+                sprite_rect_y += velocidade + 10
+                sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_abaixo
+                
+
 
                 for sprite in all_sprites:
                     sprite.rect.y -= velocidade
@@ -433,17 +495,21 @@ while running:
                 y2 -= velocidade 
             elif keys[pygame.K_RIGHT]:
                 orientacao_atual = "right"
-                sprite_rect_x += velocidade + 2
+                sprite_rect_x += velocidade + 10
+                sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_direita
 
                 for player in players:
                     player.rect.x += velocidade 
             elif keys[pygame.K_LEFT]:
                 orientacao_atual = "left"
-                sprite_rect_x -= velocidade + 2
+                sprite_rect_x -= velocidade + 10
+                sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_esquerda
                 for player in players:
                     player.rect.x -= velocidade
+            elif keys[pygame.K_c]:
+                tela = "character"
             else:
                 if orientacao_atual == "down":
                     if acao != idle_frontal:
@@ -466,6 +532,7 @@ while running:
             if y < 0:
                 y = 0
                 for sprite in all_sprites:
+
                     sprite.reset_y()
 
             if y >= altura:
@@ -478,6 +545,18 @@ while running:
                 #     veiculo.aumenta_velocidade()
                 # rua_sprite.image = fazenda
                 # rua2_sprite.image = fazenda
+            
+            
+            for veiculo in veiculos_sprites:
+                desvio = (veiculo.rect.x - sprite_rect_x,veiculo.rect.y-sprite_rect_y)
+                if frame_atual_mask.overlap(veiculo.mask, desvio):
+                    window.fill((194, 12, 2))
+                    pygame.display.update()
+                    ultimos_pontos = pontos
+                    pygame.time.delay(100)
+                    tela = 'morte'
+                    break
+
 
 
             if rua2_sprite.rect.y >= altura:
@@ -491,12 +570,88 @@ while running:
             window.blit(lista_animacao[acao][frame],(sprite_rect_x,sprite_rect_y ))
 
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
-            window.blit(texto_score,[15,15])
+            window.blit(texto_score,(15,15))
         
+    if tela == 'morte':
+        keys = pygame.key.get_pressed()
+        # window.fill((194, 12, 2))   Possible leave red or not ask to see what is better
+        # Criação de uma cor que seja transparente com uma opacidade menor para conseguir ver onde perdeu o jogo 
+        transparente_cor = pygame.Surface((window.get_width(), window.get_height()), pygame.SRCALPHA)
+        transparente_cor.fill((194, 0, 0, 1.275))
+        window.blit(transparente_cor, (0, 0))
 
+        window.blit(tombstone_img,rect_tombstone)
+        morreu_img = pygame.transform.scale(morreu_img_og,(188,188))
+        texto_score_ultimo = fonte_texto.render("SCORE: "+str(ultimos_pontos), True, (255,255,255))
+        window.blit(morreu_img, (rect_tombstone.x+40,rect_tombstone.y+10)) 
+        window.blit(texto_score,(rect_x_quit-5,rect_y_quit-500))
+        game_over = fonte_texto_maior.render("GAME OVER", True, (255,255,255))
+        window.blit(game_over,(rect_x_quit-165,rect_y_quit-650))
+        # MUDAR PERSONAGEM BOTÃO
+        # Add tombstone and in the middle the picture of the character used
+        # Add the score which the player achieved in that game 
+
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        if keys[pygame.K_c]:
+            tela = "character"
+        if rect_play.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(window,(209, 204, 201), rect_play_fundo)
+            pygame.draw.rect(window, (27, 130, 7), rect_play)
+            texto_button_restart = fonte_texto_menor.render('RESTART', True, (209, 204, 201))
+            window.blit(texto_button_restart, text_rect_restart) 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                running = False
+
+                for sprite in all_sprites:
+                    sprite.reset_y()
+                    sprite.reset_x()
+                
+
+                acao = idle_frontal
+                orientacao_atual = "down"
+                
+                sprite_rect_x = 1536 / 2  - 100
+                sprite_rect_y = 680
+                pontos = 0
+                frame = 0
+
+                if tempo_agora - last_update >= animacao_tempo_espera:
+                    frame += 1
+                    last_update = tempo_agora
+                    if frame >= len(lista_animacao[acao]):
+                        frame = 0
+
+                 
+                tela = "play"
+                running = True
+
+                
+
+        if not rect_play.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(window, (255, 255, 255), rect_play_fundo)
+            pygame.draw.rect(window, (247, 105, 2), rect_play)
+            texto_button_restart = fonte_texto_menor.render('RESTART', True, (255, 255, 255)) 
+            window.blit(texto_button_restart, text_rect_restart)
+
+            
+        if rect_quit.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(window,(209, 204, 201), rect_play_fundo_2)
+            pygame.draw.rect(window, (0, 0, 0), rect_quit)
+            texto_button_quit = fonte_texto.render('QUIT', True, (209, 204, 201)) 
+            window.blit(texto_button_quit, text_rect_quit)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                running = False
+
+        if not rect_quit.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(window,(255, 255, 255), rect_play_fundo_2)
+            pygame.draw.rect(window, (247, 105, 2), rect_quit)
+            texto_button_quit = fonte_texto.render('QUIT', True, (255, 255, 255)) 
+            window.blit(texto_button_quit, text_rect_quit)
     pygame.display.flip()
     pygame.display.update()  # Mostra o novo frame para o jogador
-
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
