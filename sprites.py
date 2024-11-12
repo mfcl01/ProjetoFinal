@@ -34,7 +34,6 @@ class Raposa(pygame.sprite.Sprite):
 
     def reset_y(self):
         self.rect.y = self.starty
-        
 class Carro(pygame.sprite.Sprite):
     def __init__(self, img, x, y, speedx):
         # Construtor da classe mãe (Sprite).
