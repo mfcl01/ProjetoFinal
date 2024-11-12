@@ -16,7 +16,8 @@ window = pygame.display.set_mode((largura, altura), pygame.FULLSCREEN)
 # largura, altura = 1200,800
 # window = pygame.display.set_mode((1200, 800))
 
-
+def reset_y(self):
+        self.rect.y = self.starty
 pygame.mixer.music.load('musica lobby.mp3')
 pygame.mixer.music.play(-1)
 pygame.display.update() 
@@ -61,8 +62,8 @@ carro_sprite = Carro(carro, -150, 400, 2.5)
 all_sprites.add(carro_sprite)
 veiculos_sprites.add(carro_sprite)
 
-raposa_sprite = Raposa(raposa)
-players.add(raposa_sprite)
+#raposa_sprite = Raposa(raposa)
+#players.add(raposa_sprite)
 
 # carro_x = -150
 # carro_y = 400
@@ -471,7 +472,7 @@ while running:
             # MOVIMENTAÇÃO DA SPRITE COM ANIMAÇÃO
             if keys[pygame.K_UP]:
                 orientacao_atual = "up"
-                sprite_rect_y -= velocidade + 10
+                #sprite_rect_y -= velocidade
                 sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_cima
 
@@ -482,7 +483,7 @@ while running:
 
             elif keys[pygame.K_DOWN]:
                 orientacao_atual = "down"
-                sprite_rect_y += velocidade + 10
+                #sprite_rect_y += velocidade
                 sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_abaixo
                 
@@ -490,12 +491,11 @@ while running:
 
                 for sprite in all_sprites:
                     sprite.rect.y -= velocidade
-            
                 y -= velocidade
                 y2 -= velocidade 
             elif keys[pygame.K_RIGHT]:
                 orientacao_atual = "right"
-                sprite_rect_x += velocidade + 10
+                sprite_rect_x += velocidade
                 sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_direita
 
@@ -503,7 +503,7 @@ while running:
                     player.rect.x += velocidade 
             elif keys[pygame.K_LEFT]:
                 orientacao_atual = "left"
-                sprite_rect_x -= velocidade + 10
+                sprite_rect_x -= velocidade
                 sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_esquerda
                 for player in players:
@@ -532,8 +532,9 @@ while running:
             if y < 0:
                 y = 0
                 for sprite in all_sprites:
-
                     sprite.reset_y()
+                sprite_rect_y = 680
+                
 
             if y >= altura:
                 y = -altura
@@ -541,8 +542,8 @@ while running:
                     sprite.reset_y()
                     sprite.reset_x()
                 pontos += 1
-                # for veiculo in veiculos_sprites:
-                #     veiculo.aumenta_velocidade()
+                for veiculo in veiculos_sprites:
+                    veiculo.aumenta_velocidade()
                 # rua_sprite.image = fazenda
                 # rua2_sprite.image = fazenda
             

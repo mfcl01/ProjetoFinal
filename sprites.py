@@ -13,7 +13,7 @@ class Raposa(pygame.sprite.Sprite):
         self.image = img
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 1536 / 2
+        self.rect.centerx = 1536 / 2 - 100
         self.rect.bottom = 680
         self.speedx = 0
         
