@@ -1,7 +1,7 @@
 import pygame
 from config import LARGURA, ALTURA, INIT, GAME, QUIT
 from init_screen import init_screen
-from game_screen import game_screen
+from MENU import game_screen
 
 
 pygame.init()

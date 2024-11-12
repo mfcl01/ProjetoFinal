@@ -13,7 +13,7 @@ window = pygame.display.set_mode((largura, altura), pygame.FULLSCREEN)
 image_lobby = pygame.image.load('Captura de tela 2024-10-30 184033.png')
 image_lobby = pygame.transform.scale(image_lobby, (largura, altura))
 window.blit(image_lobby, (0, 0))
-pygame.mixer.music.load('assets\sons\musica lobby.mp3')
+pygame.mixer.music.load('musica lobby.mp3')
 pygame.mixer.music.play(-1)
 pygame.display.update() 
 
