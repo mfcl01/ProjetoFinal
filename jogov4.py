@@ -225,13 +225,20 @@ pygame.draw.rect(window, (247, 105, 2), rect_play)
 pygame.draw.rect(window, (255, 255, 255), rect_play_fundo)
 pygame.draw.rect(window, (255, 255, 255), rect_play_fundo_2)
 pygame.draw.rect(window, (247, 105, 2), rect_quit)
+nome_player = "Nenhum"
 
-ultimos_pontos = 0
+with open("registro.txt","r") as arquivo:
+    firstline = arquivo.read().split("\n")[0]
+    print(firstline)
+    max_pontos = int(firstline[(firstline.find(":")+1):])
+    
 
 
 img_frame_atual = lista_animacao[acao][frame]
 frame_atual_mask = pygame.mask.from_surface(img_frame_atual)
 sprite_rect = img_frame_atual.get_rect(topleft=(sprite_rect_x,sprite_rect_y))
+
+
 
 # =========================================================================================================
 # ===== Loop principal =====
@@ -465,7 +472,10 @@ while running:
                 pygame.mixer.music.load('musica lobby.mp3')
                 pygame.mixer.music.play(-1)
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
+            texto_highscore = fonte_texto.render("HIGHSCORE: "+str(max_pontos), True, (255,255,255))
             window.blit(texto_score,[15,15])
+            window.blit(texto_highscore,[15,25])
+
             font = pygame.font.SysFont(None, 48)
             keys = pygame.key.get_pressed()
 
@@ -576,6 +586,15 @@ while running:
                     pygame.mixer.music.load(musica_gameover)
                     pygame.mixer.music.play(-1)
                     tela = 'morte'
+                    print(pontos , max_pontos)
+                    if pontos > max_pontos:
+                        print("entrou")
+                        max_pontos = pontos
+                        with open("registro.txt","w") as arquivo:
+                            arquivo.write(f"Recorde:{max_pontos}\n")
+                            
+                            
+                            
                     break
 
 
@@ -591,9 +610,14 @@ while running:
             window.blit(lista_animacao[acao][frame],(sprite_rect_x,sprite_rect_y ))
 
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
+            texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
             window.blit(texto_score,(15,15))
+            window.blit(texto_highscore,[15,65])
         
     if tela == 'morte':
+        
+                
+
         keys = pygame.key.get_pressed()
         # window.fill((194, 12, 2))   Possible leave red or not ask to see what is better
         # Criação de uma cor que seja transparente com uma opacidade menor para conseguir ver onde perdeu o jogo 
