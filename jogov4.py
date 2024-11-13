@@ -55,7 +55,7 @@ rect_carro = carro_img.get_rect()
 
 caminhao_img =pygame.image.load('caminhão_branco-removebg-preview.png').convert_alpha()
 caminhao = pygame.transform.scale(caminhao_img, (config.LARGURA_CAMINHAO, config.ALTURA_CAMINHAO))
-caminhao_sprite = Carro(caminhao, 1400, 80, -2.5)
+caminhao_sprite = Carro(caminhao, 1400, 120, -2.5)
 all_sprites.add(caminhao_sprite)
 veiculos_sprites.add(caminhao_sprite)
 carro_sprite = Carro(carro, -150, 400, 2.5)
@@ -490,7 +490,6 @@ while running:
                 #sprite_rect_y -= velocidade
                 sprite_rect.topleft = (sprite_rect_x, sprite_rect_y)
                 acao = correr_cima
-
                 for sprite in all_sprites:
                     sprite.rect.y += velocidade
                 y += velocidade
@@ -561,7 +560,9 @@ while running:
                     veiculo.aumenta_velocidade()
                 # rua_sprite.image = fazenda
                 # rua2_sprite.image = fazenda
-            
+            #if pontos == 0:
+             #   for veiculo in veiculos_sprites:
+              #      veiculo.reset_speed()
             
             for veiculo in veiculos_sprites:
                 desvio = (veiculo.rect.x - sprite_rect_x,veiculo.rect.y-sprite_rect_y)
