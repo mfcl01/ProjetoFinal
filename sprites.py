@@ -35,7 +35,7 @@ class Raposa(pygame.sprite.Sprite):
     def reset_y(self):
         self.rect.y = self.starty
 class Carro(pygame.sprite.Sprite):
-    def __init__(self, img, x, y, speedx):
+    def __init__(self, img, x, y, speedx, tipo):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
@@ -47,6 +47,7 @@ class Carro(pygame.sprite.Sprite):
         self.rect.y = y
         self.starty = y
         self.speedx = speedx
+        self.tipo = tipo
     
     def update(self):
         self.rect.x += self.speedx
@@ -66,8 +67,11 @@ class Carro(pygame.sprite.Sprite):
     def aumenta_velocidade(self):
         self.speedx *= 1.2
     
-    #def reset_speed(self):
-        #self.speedx = 
+    def reset_speed(self):
+        if self.tipo == 'carro':
+            self.speedx = 2.5
+        else:
+            self.speedx = -2.5 
 
 class Background(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
