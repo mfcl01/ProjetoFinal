@@ -11,10 +11,10 @@ mixer.init()
 clock = pygame.time.Clock()
 # ----- Gera tela principal
 pygame.display.set_caption('Atravesse a Rua!')
-largura, altura = pygame.display.Info().current_w, pygame.display.Info().current_h
-window = pygame.display.set_mode((largura, altura), pygame.FULLSCREEN)
-# largura, altura = 1200,800
-# window = pygame.display.set_mode((1200, 800))
+# largura, altura = pygame.display.Info().current_w, pygame.display.Info().current_h
+# window = pygame.display.set_mode((largura, altura), pygame.FULLSCREEN)
+largura, altura = 1200,800
+window = pygame.display.set_mode((1200, 800))
 
 def reset_y(self):
         self.rect.y = self.starty
@@ -82,20 +82,20 @@ rect_x_play = (largura - rect_largura) // 2
 rect_y_play = ((altura - rect_altura) // 2) + 200
 # Botao Quit
 rect_x_quit = (largura - rect_largura) // 2
-rect_y_quit = ((altura - rect_altura) // 2) + 350
+rect_y_quit = ((altura - rect_altura) // 2) + 330
 rect_quit = pygame.Rect(rect_x_quit, rect_y_quit, rect_largura, rect_altura)
 
 rect_play = pygame.Rect(rect_x_play, rect_y_play, rect_largura, rect_altura)
 rect_play_fundo = pygame.Rect(rect_x_play-10, rect_y_play-10, rect_largura_fundo, rect_altura_fundo)
 
 # FUNDO DOS PERSONAGENS
-rect_personagem_fundo = pygame.Rect(300, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_2 = pygame.Rect(500, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_3 = pygame.Rect(700, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_4 = pygame.Rect(900, 450, rect_largura_fundo-120, rect_altura_fundo-10)
-rect_personagem_fundo_5 = pygame.Rect(1100, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo = pygame.Rect(150, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_2 = pygame.Rect(350, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_3 = pygame.Rect(550, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_4 = pygame.Rect(750, 450, rect_largura_fundo-120, rect_altura_fundo-10)
+rect_personagem_fundo_5 = pygame.Rect(950, 450, rect_largura_fundo-120, rect_altura_fundo-10)
 
-rect_play_fundo_2 = pygame.Rect(rect_x_play-10, rect_y_play+140, rect_largura_fundo, rect_altura_fundo)
+rect_play_fundo_2 = pygame.Rect(rect_x_play-10, rect_y_play+120, rect_largura_fundo, rect_altura_fundo)
 rect_fundo_titulo = pygame.Rect(rect_x_quit-133,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
 # rect_fundo_personagem = pygame.Rect(rect_x_quit-150,rect_y_quit-495, rect_largura_fundo_titulo, rect_altura_fundo_titulo)
 
@@ -246,6 +246,11 @@ while running:
         window.blit(titulo_jogo_2,(rect_x_quit-121,rect_y_quit-500))
         window.blit(titulo_jogo,(rect_x_quit-116,rect_y_quit-500))
         pontos = 0
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.stop()
+            pygame.mixer.init()
+            pygame.mixer.music.load('musica lobby.mp3')
+            pygame.mixer.music.play(-1)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -281,6 +286,11 @@ while running:
                 
 
     if tela == "character":
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.stop()
+            pygame.mixer.init()
+            pygame.mixer.music.load('musica lobby.mp3')
+            pygame.mixer.music.play(-1)
         pygame.display.set_caption('Escolha o personagem')
         window.fill((27, 130, 7))
         keys = pygame.key.get_pressed()
@@ -314,7 +324,7 @@ while running:
                             contador_passo += 1
                         lista_animacao.append(img_temp_lista)
                     running = True 
-                    tela = "play" # Testando tela nova mudar para "play depois"
+                    tela = "play" 
         if rect_personagem_fundo_2.collidepoint(pygame.mouse.get_pos()):
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = bird
@@ -337,7 +347,7 @@ while running:
                             contador_passo += 1
                         lista_animacao.append(img_temp_lista)
                     running = True 
-                    tela = "play" # Testando tela nova mudar para "play depois"
+                    tela = "play" 
         if rect_personagem_fundo_3.collidepoint(pygame.mouse.get_pos()):
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = fox
@@ -361,7 +371,7 @@ while running:
                             contador_passo += 1
                         lista_animacao.append(img_temp_lista)
                     running = True  
-                    tela = "play" # Testando tela nova mudar para "play depois"
+                    tela = "play" 
 
         if rect_personagem_fundo_4.collidepoint(pygame.mouse.get_pos()):
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -386,7 +396,7 @@ while running:
                             contador_passo += 1
                         lista_animacao.append(img_temp_lista)
                     running = True 
-                    tela = "play" # Testando tela nova mudar para "play depois"              
+                    tela = "play"             
         if rect_personagem_fundo_5.collidepoint(pygame.mouse.get_pos()):
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = cat_gray
@@ -410,7 +420,7 @@ while running:
                             contador_passo += 1
                         lista_animacao.append(img_temp_lista)
                     running = True 
-                    tela = "play" # Testando tela nova mudar para "play depois"              
+                    tela = "play"          
                         
 
             
@@ -432,23 +442,28 @@ while running:
 
         window.blit(titulo_personagens,(rect_x_quit-250,rect_y_quit-500))
         pygame.draw.rect(window,(92, 91, 87), rect_personagem_fundo)
-        window.blit(imagem_scale_raccoon,(302.5,455))
+        window.blit(imagem_scale_raccoon,(152.5,455))
 
         
         pygame.draw.rect(window,(35, 179, 232), rect_personagem_fundo_2)
-        window.blit(imagem_scale_bird,(502.5,455))
+        window.blit(imagem_scale_bird,(352.5,455))
 
         pygame.draw.rect(window,(191, 128, 44), rect_personagem_fundo_3)
-        window.blit(imagem_scale_raposa,(702.5,455))
+        window.blit(imagem_scale_raposa,(552.5,455))
         
         pygame.draw.rect(window,(247, 141, 0), rect_personagem_fundo_4)
-        window.blit(imagem_scale_catorange,(902.5,455))
+        window.blit(imagem_scale_catorange,(752.5,455))
 
         pygame.draw.rect(window,(130, 128, 126), rect_personagem_fundo_5)
-        window.blit(imagem_scale_catgray,(1102.5,455))
+        window.blit(imagem_scale_catgray,(952.5,455))
 
 
     if tela == 'play':
+            if not pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+                pygame.mixer.init()
+                pygame.mixer.music.load('musica lobby.mp3')
+                pygame.mixer.music.play(-1)
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
             window.blit(texto_score,[15,15])
             font = pygame.font.SysFont(None, 48)
@@ -556,6 +571,10 @@ while running:
                     pygame.display.update()
                     ultimos_pontos = pontos
                     pygame.time.delay(100)
+                    pygame.mixer.init()
+                    musica_gameover = "game over.mp3"
+                    pygame.mixer.music.load(musica_gameover)
+                    pygame.mixer.music.play(-1)
                     tela = 'morte'
                     break
 
@@ -597,8 +616,7 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        if keys[pygame.K_c]:
-            tela = "character"
+
         if rect_play.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(window,(209, 204, 201), rect_play_fundo)
             pygame.draw.rect(window, (27, 130, 7), rect_play)
@@ -626,7 +644,7 @@ while running:
                     if frame >= len(lista_animacao[acao]):
                         frame = 0
 
-                 
+                pygame.mixer.music.stop()
                 tela = "play"
                 running = True
 
