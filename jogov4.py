@@ -628,7 +628,8 @@ while running:
                 for sprite in all_sprites:
                     sprite.reset_y()
                     sprite.reset_x()
-                
+                x, y = 0, 0
+                y2 = altura
 
                 acao = idle_frontal
                 orientacao_atual = "down"
