@@ -474,7 +474,7 @@ while running:
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
             texto_highscore = fonte_texto.render("HIGHSCORE: "+str(max_pontos), True, (255,255,255))
             window.blit(texto_score,[15,15])
-            window.blit(texto_highscore,[15,25])
+            window.blit(texto_highscore,[15,65])
 
             font = pygame.font.SysFont(None, 48)
             keys = pygame.key.get_pressed()
@@ -610,7 +610,7 @@ while running:
             window.blit(lista_animacao[acao][frame],(sprite_rect_x,sprite_rect_y ))
 
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
-            texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
+            texto_highscore = fonte_texto.render("HIGHSCORE: "+str(max_pontos), True, (255,255,255))
             window.blit(texto_score,(15,15))
             window.blit(texto_highscore,[15,65])
         
