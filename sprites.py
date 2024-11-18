@@ -65,7 +65,7 @@ class Carro(pygame.sprite.Sprite):
         self.rect.y = self.starty
 
     def aumenta_velocidade(self):
-        self.speedx *= 1.2
+        self.speedx *= 1.1
     
     def reset_speed(self):
         if self.tipo == 'carro':
