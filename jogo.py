@@ -336,7 +336,7 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = bird
                     running = False
-                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_x = 1536 / 2 - 200
                     sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
@@ -359,7 +359,7 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = fox
                     running = False
-                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_x = 1536 / 2 - 200
                     sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
@@ -384,7 +384,7 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = cat_orange
                     running = False
-                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_x = 1536 / 2 - 200
                     sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
@@ -408,7 +408,7 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                     personagem = cat_gray
                     running = False
-                    sprite_rect_x = 1536 / 2 - 100
+                    sprite_rect_x = 1536 / 2 - 200
                     sprite_rect_y = 680
                     sprite_character_image = pygame.image.load(personagem).convert_alpha()
                     sprite_sheet = sprite_ajuda.SpriteSheet(sprite_character_image)
@@ -471,10 +471,6 @@ while running:
                 pygame.mixer.init()
                 pygame.mixer.music.load('musica lobby.mp3')
                 pygame.mixer.music.play(-1)
-            texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
-            texto_highscore = fonte_texto.render("HIGHSCORE: "+str(max_pontos), True, (255,255,255))
-            window.blit(texto_score,[15,15])
-            window.blit(texto_highscore,[15,25])
 
             font = pygame.font.SysFont(None, 48)
             keys = pygame.key.get_pressed()
@@ -532,8 +528,6 @@ while running:
                 acao = correr_esquerda
                 for player in players:
                     player.rect.x -= velocidade
-            elif keys[pygame.K_c]:
-                tela = "character"
             else:
                 if orientacao_atual == "down":
                     if acao != idle_frontal:
@@ -610,7 +604,7 @@ while running:
             window.blit(lista_animacao[acao][frame],(sprite_rect_x,sprite_rect_y ))
 
             texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
-            texto_score = fonte_texto.render("SCORE: "+str(pontos), True, (255,255,255))
+            texto_highscore = fonte_texto.render("HIGHSCORE: "+str(max_pontos), True, (255,255,255))
             window.blit(texto_score,(15,15))
             window.blit(texto_highscore,[15,65])
         
@@ -658,7 +652,7 @@ while running:
                 acao = idle_frontal
                 orientacao_atual = "down"
                 
-                sprite_rect_x = 1536 / 2  - 100
+                sprite_rect_x = 1536 / 2  - 200
                 sprite_rect_y = 680
                 pontos = 0
                 frame = 0

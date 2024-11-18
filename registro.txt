@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Recorde:1
+=======
+Recorde:0
+>>>>>>> b401f23d085c67fd9ffcf28200910d69d2266edf
